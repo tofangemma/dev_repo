@@ -19,14 +19,78 @@
       "Properties": {
         "CidrBlock": "10.0.2.25/16",
         "Tags": [
-        { "Key": "name", "Value":  "wainbo" }
-        ]
+        { "Key": "name", "Value":  "Wainbo" }]
       }
-    }
+    },
+    
+    "Wainboigw": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": { 
+      "Tags":[{ "Key": "Name", "Value":  "Wainboigw" }]
+      }
+    },
+    "AttachGateway": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": { "Ref": "Wainbo" },
+        "InternetGatewayId": { "Ref": "Wainboigw" }
+      }
+    },
+    
+    "WainboPubrtb": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": { "Ref": "Wainbo" },
+         "Tags":[{ "Key": "Name", "Value":  "Wainbortb" }]
+      }
+    },
+    
+    "WainboPubrt": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "RouteTableId": { "Ref": "WainboPubrtb" },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {"Ref":"Wainboigw"}
+      }
+    },
+    
+    "Pubrouteassoc": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": { "Ref": "WainboPubsub" },
+        "RouteTableId": { "Ref": "WainboPubrtb" }
+        
+      }
+    },
+    
+    "WainboPubsub": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "AvailabilityZone": "us-east-1",
+        "VpcId": { "Ref": "Wainbo" },
+        "CidrBlock": "10.0.0.25/16",
+        
+        "Tags":[{ "Key": "Name", "Value":  "WainboPubsub" }]
+      }
+    },
+    
+    "WainboPrisub": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "AvailabilityZone": "us-east-1",
+        "VpcId": { "Ref": "Wainbo" },
+        "CidrBlock": "10.0.0.30/18",
+        "Tags":[{ "Key": "Name", "Value":  "WainboPrisub" }]
+      }
+    },
+    
+    
     
 
-    },
+    
+    
     "Outputs": {
 
     }
+}
 }
