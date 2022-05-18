@@ -80,8 +80,9 @@
         "AvailabilityZone": "us-east-1",
         "VpcId": { "Ref": "Wainbo" },
         "CidrBlock": "10.0.0.30/18",
-        "Tags":[{ "Key": "Name", "Value":  "WainboPrisub" }]
+        "Tags":[{ "Key": "Name", "Value": "WainboPrisub" }]
       }
+    }
     },
     
     
